@@ -228,3 +228,25 @@ Together they investigate infrastructure required around increasingly autonomous
 **v0.1.0 — deterministic revocation experiment**
 
 Built as part of Gradensal Lab.
+
+## Visual Evidence
+
+The repository includes screenshots from the verified GL-003 experiment and public project release.
+
+### GitHub Project
+
+![GL-003 GitHub README](evidence/screenshots/01-github-readme.png)
+
+### Automated Verification
+
+![GL-003 pytest results showing 9 passing tests](evidence/screenshots/02-pytest-9-passed.png)
+
+### Mid-Run Revocation
+
+![GL-003 demo showing mid-run revocation](evidence/screenshots/03-demo-midrun-revocation.png)
+
+### Demo Summary
+
+![GL-003 controlled demonstration summary](evidence/screenshots/04-demo-summary.png)
+
+The screenshots complement the machine-readable evidence stored in `evidence/receipts/` and the reproducible outputs stored in `evidence/test-results/`.
