@@ -1,0 +1,31 @@
+GL-003 — Revocation Test
+Action-boundary authorization experiment
+
+[1] Active Authority
+Authorization state: ACTIVE
+Decision: ALLOW
+Reason: AUTHORIZED
+Receipt: evidence/receipts/01-active-authority.json
+
+[2] Revoked Authority
+Authorization state: REVOKED
+Decision: DENY
+Reason: AUTHORIZATION_REVOKED
+Receipt: evidence/receipts/02-revoked-authority.json
+
+[3] Expired Authority
+Authorization state: EXPIRED
+Decision: DENY
+Reason: AUTHORIZATION_EXPIRED
+Receipt: evidence/receipts/03-expired-authority.json
+
+[4] Midrun Revocation
+Authorization state: REVOKED
+Decision: DENY
+Reason: AUTHORIZATION_REVOKED
+Receipt: evidence/receipts/04-midrun-revocation.json
+
+SUMMARY
+1 ALLOW, 3 DENY
+Core finding: a proposal valid when created can still be denied at execution
+if delegated authority is revoked before the action boundary.

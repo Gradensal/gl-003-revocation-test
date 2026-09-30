@@ -1,0 +1,13 @@
+{
+  "receipt_id": "RR-P-001-1790676360",
+  "authorization_id": "AUTH-001",
+  "agent_id": "procurement-agent",
+  "proposal_id": "P-001",
+  "action": "create_purchase_order",
+  "resource": "office-chair",
+  "decision": "allow",
+  "reason_code": "AUTHORIZED",
+  "authorization_state": "active",
+  "proposed_at": "2026-09-29T10:05:00+00:00",
+  "checked_at": "2026-09-29T10:06:00+00:00"
+}

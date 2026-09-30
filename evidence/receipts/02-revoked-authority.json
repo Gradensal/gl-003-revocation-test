@@ -1,0 +1,13 @@
+{
+  "receipt_id": "RR-P-002-1790676720",
+  "authorization_id": "AUTH-002",
+  "agent_id": "procurement-agent",
+  "proposal_id": "P-002",
+  "action": "create_purchase_order",
+  "resource": "monitor",
+  "decision": "deny",
+  "reason_code": "AUTHORIZATION_REVOKED",
+  "authorization_state": "revoked",
+  "proposed_at": "2026-09-29T10:11:00+00:00",
+  "checked_at": "2026-09-29T10:12:00+00:00"
+}

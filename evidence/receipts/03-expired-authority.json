@@ -1,0 +1,13 @@
+{
+  "receipt_id": "RR-P-003-1790683260",
+  "authorization_id": "AUTH-003",
+  "agent_id": "procurement-agent",
+  "proposal_id": "P-003",
+  "action": "create_purchase_order",
+  "resource": "keyboard",
+  "decision": "deny",
+  "reason_code": "AUTHORIZATION_EXPIRED",
+  "authorization_state": "expired",
+  "proposed_at": "2026-09-29T12:01:00+00:00",
+  "checked_at": "2026-09-29T12:01:00+00:00"
+}
