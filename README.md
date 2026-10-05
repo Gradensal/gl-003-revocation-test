@@ -6,6 +6,7 @@
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
 ![Tests](https://img.shields.io/badge/tests-9%20passing-brightgreen)
 ![Status](https://img.shields.io/badge/status-research%20prototype-orange)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **A deterministic Python experiment exploring what happens when an AI agent's delegated authority changes after the agent has already started working.**
 
