@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 from datetime import datetime
-from enum import Enum
+from enum import StrEnum
 
 
-class AuthorizationState(str, Enum):
+class AuthorizationState(StrEnum):
     ACTIVE = "active"
     REVOKED = "revoked"
     EXPIRED = "expired"

@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import pytest
 
@@ -10,14 +10,13 @@ from policy import (
 )
 from receipt import DecisionReceipt
 
-
 BASE = datetime(
     2026,
     9,
     29,
     10,
     0,
-    tzinfo=timezone.utc,
+    tzinfo=UTC,
 )
 
 

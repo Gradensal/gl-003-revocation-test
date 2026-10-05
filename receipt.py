@@ -1,6 +1,6 @@
+import json
 from dataclasses import dataclass
 from pathlib import Path
-import json
 
 from authorization import Authorization
 from policy import ActionProposal, PolicyResult

@@ -1,9 +1,8 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from authorization import Authorization
 from policy import ActionProposal, evaluate_action
 from receipt import DecisionReceipt
-
 
 BASE = datetime(
     2026,
@@ -11,7 +10,7 @@ BASE = datetime(
     29,
     10,
     0,
-    tzinfo=timezone.utc,
+    tzinfo=UTC,
 )
 
 
