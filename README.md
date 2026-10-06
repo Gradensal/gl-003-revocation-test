@@ -4,7 +4,7 @@
 
 [![CI](https://github.com/Gradensal/gl-003-revocation-test/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/Gradensal/gl-003-revocation-test/actions/workflows/ci.yml?query=branch%3Amain)
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
-![Tests](https://img.shields.io/badge/tests-9%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/tests-11%20passing-brightgreen)
 ![Status](https://img.shields.io/badge/status-research%20prototype-orange)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -26,7 +26,7 @@ The experiment tests whether authorization should be treated as a one-time sessi
 
 ## Core Finding
 
-**Authorization should be re-evaluated at the consequential action boundary rather than assumed to remain valid for the lifetime of an agent session.**
+**Authorization should be re-evaluated at the consequential action boundary rather than assumed to remain valid for the lifetime of an agent session. If current authority cannot be established, execution should fail closed.**
 
 GL-003 demonstrates a simple but important sequence:
 
@@ -93,7 +93,7 @@ GL-003 models an alternative:
 
 ## Controlled Experiment
 
-The demonstration exercises four authorization scenarios.
+The demonstration exercises five authorization scenarios.
 
 | Scenario | State at Action Boundary | Decision |
 |---|---|---|
@@ -101,6 +101,7 @@ The demonstration exercises four authorization scenarios.
 | Revoked authority | `REVOKED` | `DENY` |
 | Expired authority | `EXPIRED` | `DENY` |
 | Proposal created before revocation | `REVOKED` at execution | `DENY` |
+| Authorization unavailable | no verifiable state | `DENY` |
 
 The fourth scenario is the central experiment.
 
@@ -146,13 +147,20 @@ Authorization state: REVOKED
 Decision: DENY
 Reason: AUTHORIZATION_REVOKED
 
+[5] Authorization Unavailable
+Authorization state: UNAVAILABLE
+Decision: DENY
+Reason: AUTHORIZATION_UNAVAILABLE
+
 SUMMARY
-1 ALLOW, 3 DENY
+1 ALLOW, 4 DENY
 ```
 
-The experiment therefore demonstrates:
+The experiment therefore demonstrates two related controls:
 
 > **A proposal valid when created can still be denied at execution if delegated authority is revoked before the action boundary.**
+
+> **If current authority cannot be established at the action boundary, the policy fails closed and denies execution.**
 
 Machine-readable decision receipts are written to:
 
@@ -214,7 +222,8 @@ evidence/
     ├── 01-active-authority.json
     ├── 02-revoked-authority.json
     ├── 03-expired-authority.json
-    └── 04-midrun-revocation.json
+    ├── 04-midrun-revocation.json
+    └── 05-authorization-unavailable.json
 ```
 
 These receipts provide inspectable evidence of:
@@ -234,7 +243,7 @@ evidence/test-results/
 
 ## Automated Verification
 
-The project currently contains **9 passing automated tests** covering:
+The project currently contains **11 passing automated tests** covering:
 
 - active authorization;
 - revoked authorization;
@@ -244,7 +253,9 @@ The project currently contains **9 passing automated tests** covering:
 - exact expiration boundary;
 - double-revocation protection;
 - revocation after expiration;
-- decision receipt serialization.
+- decision receipt serialization;
+- fail-closed behavior when authorization is unavailable;
+- auditable receipt generation when authorization cannot be established.
 
 Run:
 
@@ -255,8 +266,8 @@ pytest
 Expected result:
 
 ```text
-......... [100%]
-9 passed
+........... [100%]
+11 passed
 ```
 
 Code quality is checked with Ruff:
@@ -288,7 +299,7 @@ INSTALL DEPENDENCIES
         ↓
 RUN RUFF
         ↓
-RUN 9 AUTOMATED TESTS
+RUN 11 AUTOMATED TESTS
         ↓
 RUN REVOCATION EXPERIMENT
 ```
@@ -352,7 +363,7 @@ Produces machine-readable evidence for authorization decisions.
 
 ### `run_demo.py`
 
-Runs the four controlled scenarios and writes their decision receipts.
+Runs the five controlled scenarios and writes their decision receipts.
 
 ### `tests/`
 
@@ -422,6 +433,12 @@ evidence/receipts/
 ### Controlled Experiment Summary
 
 ![GL-003 controlled demonstration summary](evidence/screenshots/04-demo-summary.png)
+
+### Fail-Closed Authorization Check
+
+![GL-003 fail-closed authorization-unavailable demonstration](evidence/screenshots/05-fail-closed-authorization-demo.png)
+
+This latest experiment demonstrates that the policy denies execution when current authority cannot be established, while preserving an auditable `AUTHORIZATION_UNAVAILABLE` reason.
 
 The screenshots complement the machine-readable receipts and reproducible test evidence stored in the repository.
 
@@ -523,11 +540,11 @@ Current verified state:
 
 ```text
 Python 3.12
-9 automated tests passing
+11 automated tests passing
 Ruff quality checks passing
 GitHub Actions CI passing
-4 controlled authorization scenarios
-4 machine-readable decision receipts
+5 controlled authorization scenarios
+5 machine-readable decision receipts
 Reproducible mid-run revocation experiment
 ```
 

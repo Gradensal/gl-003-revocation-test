@@ -25,7 +25,13 @@ Decision: DENY
 Reason: AUTHORIZATION_REVOKED
 Receipt: evidence/receipts/04-midrun-revocation.json
 
+[5] Authorization Unavailable
+Authorization state: UNAVAILABLE
+Decision: DENY
+Reason: AUTHORIZATION_UNAVAILABLE
+Receipt: evidence/receipts/05-authorization-unavailable.json
+
 SUMMARY
-1 ALLOW, 3 DENY
-Core finding: a proposal valid when created can still be denied at execution
-if delegated authority is revoked before the action boundary.
+1 ALLOW, 4 DENY
+Core finding: authorization must still be valid and verifiable at the action boundary.
+Revoked, expired, or unavailable authority does not permit execution.
