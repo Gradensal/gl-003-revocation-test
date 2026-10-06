@@ -1,0 +1,13 @@
+{
+  "receipt_id": "RR-P-005-1790677860",
+  "authorization_id": null,
+  "agent_id": "procurement-agent",
+  "proposal_id": "P-005",
+  "action": "create_purchase_order",
+  "resource": "standing-desk",
+  "decision": "deny",
+  "reason_code": "AUTHORIZATION_UNAVAILABLE",
+  "authorization_state": null,
+  "proposed_at": "2026-09-29T10:30:00+00:00",
+  "checked_at": "2026-09-29T10:31:00+00:00"
+}

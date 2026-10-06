@@ -29,7 +29,7 @@ def make_authorization(
 def run_scenario(
     number: int,
     name: str,
-    authorization: Authorization,
+    authorization: Authorization | None,
     proposal: ActionProposal,
     checked_at: datetime,
 ) -> DecisionReceipt:
@@ -45,10 +45,16 @@ def run_scenario(
         result,
     )
 
+    authorization_state = (
+        result.authorization_state.value.upper()
+        if result.authorization_state is not None
+        else "UNAVAILABLE"
+    )
+
     print(f"\n[{number}] {name}")
     print(
         "Authorization state: "
-        f"{result.authorization_state.value.upper()}"
+        f"{authorization_state}"
     )
     print(
         f"Decision: {result.decision.value.upper()}"
@@ -156,17 +162,33 @@ def main() -> None:
         BASE + timedelta(minutes=22),
     )
 
+    unavailable_proposal = ActionProposal(
+        proposal_id="P-005",
+        agent_id="procurement-agent",
+        action="create_purchase_order",
+        resource="standing-desk",
+        proposed_at=BASE + timedelta(minutes=30),
+    )
+
+    run_scenario(
+        5,
+        "Authorization Unavailable",
+        None,
+        unavailable_proposal,
+        BASE + timedelta(minutes=31),
+    )
+
     print("\nSUMMARY")
-    print("1 ALLOW, 3 DENY")
+    print("1 ALLOW, 4 DENY")
 
     print(
-        "Core finding: a proposal valid when created "
-        "can still be denied at execution"
+        "Core finding: authorization must still be "
+        "valid and verifiable at the action boundary."
     )
 
     print(
-        "if delegated authority is revoked before "
-        "the action boundary."
+        "Revoked, expired, or unavailable authority "
+        "does not permit execution."
     )
 
 

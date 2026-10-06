@@ -242,3 +242,56 @@ def test_receipt_serializes_decision_evidence(
         '"authorization_state": "active"'
         in content
     )
+
+
+def test_missing_authorization_fails_closed() -> None:
+    result = evaluate_action(
+        None,
+        make_proposal(),
+        BASE + timedelta(minutes=6),
+    )
+
+    assert result.decision is PolicyDecision.DENY
+
+    assert (
+        result.reason_code
+        == "AUTHORIZATION_UNAVAILABLE"
+    )
+
+    assert result.authorization_state is None
+
+
+def test_missing_authorization_receipt_preserves_denial_evidence(
+    tmp_path,
+) -> None:
+    proposal = make_proposal()
+
+    result = evaluate_action(
+        None,
+        proposal,
+        BASE + timedelta(minutes=6),
+    )
+
+    receipt = DecisionReceipt.from_evaluation(
+        None,
+        proposal,
+        result,
+    )
+
+    output = tmp_path / "missing-authorization-receipt.json"
+
+    receipt.write_json(output)
+
+    content = output.read_text(
+        encoding="utf-8"
+    )
+
+    assert '"decision": "deny"' in content
+
+    assert (
+        '"reason_code": "AUTHORIZATION_UNAVAILABLE"'
+        in content
+    )
+
+    assert '"authorization_id": null' in content
+    assert '"authorization_state": null' in content

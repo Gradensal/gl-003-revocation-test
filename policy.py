@@ -24,11 +24,11 @@ class PolicyResult:
     decision: PolicyDecision
     reason_code: str
     checked_at: datetime
-    authorization_state: AuthorizationState
+    authorization_state: AuthorizationState | None
 
 
 def evaluate_action(
-    authorization: Authorization,
+    authorization: Authorization | None,
     proposal: ActionProposal,
     checked_at: datetime,
 ) -> PolicyResult:
@@ -41,6 +41,14 @@ def evaluate_action(
     ):
         raise ValueError(
             "proposal.proposed_at must be timezone-aware"
+        )
+
+    if authorization is None:
+        return PolicyResult(
+            decision=PolicyDecision.DENY,
+            reason_code="AUTHORIZATION_UNAVAILABLE",
+            checked_at=checked_at,
+            authorization_state=None,
         )
 
     if proposal.agent_id != authorization.agent_id:
